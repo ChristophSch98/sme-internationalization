@@ -1,8 +1,11 @@
 .venv/
 data/raw/
+data/processed/
+*.parquet
 .env
 references/*.pdf
 __pycache__/
 *.pyc
 *.log
 *.tex
+.ipynb_checkpoints/
