@@ -10,3 +10,4 @@ __pycache__/
 *.tex
 .ipynb_checkpoints/
 output/
+research_note.pdf

@@ -2,13 +2,36 @@ version: '3'
 
 tasks:
   pull:
+    desc: "Pull raw data from WRDS"
     cmds:
-      - python code/01_pull_data.py
+     - python code/01_pull_data.py
 
   clean:
+    desc: "Clean panel and remove duplicates"
     deps: [pull]
     cmds:
-      - python code/02_clean.py
+     - python code/02_clean.py
+
+  descriptives:
+    desc: "Variable construction and descriptive statistics"
+    deps: [clean]
+    cmds:
+      - python code/03_descriptives.py
+
+  regression:
+    desc: "Run panel regressions"
+    deps: [descriptives]
+    cmds:
+     - python code/04_regression.py
+
+  render:
+    desc: "Render research_note.qmd to PDF via Quarto"
+    cmds:
+     - quarto render research_note.qmd
 
   all:
-    deps: [clean]
+    desc: "Full pipeline — analysis + PDF"
+    deps: [regression]
+    cmds:
+     - quarto render research_note.qmd
+     
