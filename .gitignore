@@ -9,3 +9,4 @@ __pycache__/
 *.log
 *.tex
 .ipynb_checkpoints/
+output/

@@ -3,38 +3,28 @@
    **Author:** Christoph Schößwendter
 
    ## Research Question
-   Is there a statistically significant relationship between global economic instability and the Degree of Internationalization of listed Austrian, German, and Swiss companies during the period 2008–2023?
 
-   ## Hypotheses
-   - H1: Higher levels of global economic instability are negatively associated with the Degree of Internationalization of listed Austrian, German, and Swiss firms.
-   - H2: The negative effect of global economic instability on DOI is more pronounced with a oneyear lag than contemporaneously, reflecting the time required for strategic adjustment under sunk costs.
-   - H3: Geopolitical risk has a stronger negative effect on the Foreign Assets to Total Assets ratio than on the Foreign Sales to Total Sales ratio, due to the higher irreversibility of foreign physical assets relative to export sales.
-   - H4:  Larger and more profitable firms exhibit a smaller (less negative) sensitivity of DOI to global economic instability, reflecting stronger uncertainty-management capabilities
-   - H5: The effect of global economic instability on DOI varies significantly across industries: cyclical and manufacturing-intensive sectors display stronger negative effects than utilities, healthcare, or consumer staples.
-   - H6:  Country-level heterogeneity exists: Swiss firms exhibit lower uncertainty-sensitivity than Austrian and German firms, attributable to the safe-haven status of the Swiss franc and the high global diversification of Swiss multinationals.
+   Does R&D intensity positively affect firm performance among European SMEs, and does firm size moderate this relationship?
+
+   *Note: The originally planned DOI (Degree of Internationalization) variable was dropped because `pifo` (foreign income) is not available in Compustat Global, and `rect/sale` produces extreme outliers for SMEs. The research design was updated to R&D intensity, which has 100% coverage in our sample.*
+
+## Hypotheses
+
+   - **H1:** R&D intensity affects RoA (expensing effect expected in short run)
+   - **H2:** Firm size positively moderates the R&D intensity – RoA relationship
+   
 ## Variables
 
-### Dependent variable (Y)
+| Variable | Field(s) | Formula | Role |
+|----------------|-------------|----------------------|----------------|
+| RoA | ib, at | ib / at | Dependent (Y) |
+| R&D intensity | xrd, at | xrd.fillna(0) / at | Independent |
+| R&D x Size | - | rd_intensity x ln_at | H2 interaction |
+| Firm size | at | log(at) | Moderator+Ctrl |
+| Leverage | dltt, at | dltt / at | Control |
+| CAPX intensity | capx, at | capx / at | Control |
+| Cash ratio | che, at | che / at | Control |
 
-| Construct | Data Item(s) | Formula | Role |
-|-----------|--------------|---------|------|
-| RoA | IB, AT | IB / AT | Primary |
-| EBITDA margin | EBITDA, SALE | EBITDA / SALE | Robustness |
-
-### Independent variable (X)
-
-| Construct | Data Item(s) | Formula | Role |
-|-----------|--------------|---------|------|
-| R&D Intensity | XRD, AT | XRD / AT | Primary |
-| Cash Holdings | CHE, AT | CHE / AT | Robustness |
-
-### Controls
-
-| Construct | Data Item(s) | Formula |
-|-----------|--------------|---------|
-| Firm size | AT | log(AT) |
-| Leverage | DLTT, DLC, SEQ | (DLTT + DLC) / SEQ |
-| Firm age (proxy: Compustat tenure) | FYEAR, GVKEY | FYEAR - min(FYEAR by GVKEY) |
 ## Data
 
 | Item | Detail |
@@ -47,3 +37,9 @@
 | Raw rows | 338,491 |
 | Clean rows | 26,091 |
 | Geography | All (no country filter) |
+
+## Results
+
+- R&D intensity has a robust negative effect on contemporaneous RoA among European SMEs (β = -0.55, p < 0.001 in TWFE), consistent with the expensing hypothesis (H1 supported).
+- Firm size does not moderate this relationship (β(R&D × size) = 0.09, n.s.), so larger SMEs do not benefit disproportionately from R&D investment (H2 not supported, although the sign points in the predicted direction).
+- The R&D effect shrinks by ~30% when moving from OLS to two-way fixed effects (-0.79 → -0.55), indicating substantial omitted-variable bias in pooled estimates — firm-level heterogeneity is essential to control for.

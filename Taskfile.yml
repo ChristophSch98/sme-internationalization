@@ -1,15 +1,14 @@
 version: '3'
 
-   tasks:
-     pull:
-       cmds:
-         - python code/01_pull_data.py
+tasks:
+  pull:
+    cmds:
+      - python code/01_pull_data.py
 
-     clean:
-       deps: [pull]
-       cmds:
-         - python code/02_clean.py
+  clean:
+    deps: [pull]
+    cmds:
+      - python code/02_clean.py
 
-     all:
-       deps: [clean]
-       
+  all:
+    deps: [clean]
